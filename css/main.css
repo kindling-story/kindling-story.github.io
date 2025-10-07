@@ -1,0 +1,44 @@
+/* elements */
+html {
+    height:100%;
+    width:100%;
+    scroll-behavior: smooth;
+    overflow-x: hidden;
+}
+
+body {
+    width:100%;
+    overflow-x: hidden;
+}
+
+section {
+    width:100%;
+    display:flex;
+    position:relative;
+}
+
+section:last-of-type {
+    padding-bottom:70px !important; 
+}
+
+footer {
+    padding:20px;
+}
+
+h1 {
+    font-size:3em;
+    font-family: 'Playfair Display', serif;
+    font-weight:700;
+}
+
+a {
+    text-decoration:none;
+}
+
+a:hover {
+    text-decoration: none;
+}
+
+td, th {
+    padding: 10px;
+}

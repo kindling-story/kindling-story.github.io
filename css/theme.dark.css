@@ -1,0 +1,93 @@
+/*
+    only colour information is defined in this stylesheet
+    for position, margins etc. see 'main.css'
+*/
+:root {
+    --color-primary:#141414;
+    --color-accent-primary:#282828;
+    --color-brand:#9e8d7b;
+    --color-accent-secondary:#230046;
+    --color-secondary:#e4e4e4;
+}
+
+/* elements */
+body {
+    background-color: var(--color-primary);
+    color:var(--color-secondary);
+}
+
+section:nth-child(even) {
+    background-color: var(--color-primary);
+}
+
+section:nth-child(odd) {
+    background-color: var(--color-accent-primary);
+}
+
+footer {
+    background-color: var(--color-accent-secondary);
+    color: var(--color-primary);
+}
+
+a {
+    color:var(--color-secondary);
+}
+
+a:hover {
+    color:var(--color-secondary);
+}
+
+tbody tr:nth-child(odd) {
+    background-color: var(--color-accent-primary);
+}
+
+/* classes */
+.bg-white {
+    background-color:white;
+}
+
+.bg-light {
+    background-color:var(--color-primary) !important;
+}
+
+.bg-accent-light {
+    background-color: var(--color-accent-primary) !important;
+}
+
+.btn:hover {
+    background-color: var(--color-accent-secondary);
+    color:var(--color-primary);
+}
+
+.btn-outline {
+    background-color: transparent;
+    border-color:var(--color-secondary);
+    color:var(--color-secondary);
+}
+
+.btn-outline:active {
+    background-color:var(--color-secondary);
+    color:var(--color-primary);
+}
+
+.text-light {
+    color:var(--color-primary);
+}
+
+.text-dark {
+    color:var(--color-secondary);
+}
+
+.active {
+    font-weight:bold;
+}
+
+/* ids */
+#artifact-list tbody tr:hover {
+    color:var(--color-primary);
+    background-color:var(--color-secondary);
+}
+
+#artifact-list tbody tr {
+    cursor:pointer;
+}
