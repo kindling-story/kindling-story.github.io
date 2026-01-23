@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<gexf version="1.2" xmlns="http://www.gexf.net/1.2draft" xmlns:viz="http:///www.gexf.net/1.1draft/viz">
+  <meta/>
+  <graph defaultedgetype="directed">
+    <attributes class="node">
+      <attribute id="contentRef" title="contentRef" type="string"/>
+      <attribute id="initiallyVisible" title="initiallyVisible" type="boolean"/>
+      <attribute id="rawSize" title="rawSize" type="integer"/>
+    </attributes>
+    <attributes class="edge">
+      <attribute id="rawWeight" title="rawWeight" type="integer"/>
+    </attributes>
+    <nodes>
+      <node id="A" label="Dedication">
+        <attvalues>
+          <attvalue for="contentRef" value="items/dedication.json"/>
+          <attvalue for="initiallyVisible" value="true"/>
+          <attvalue for="rawSize" value="20"/>
+        </attvalues>
+        <viz:color r="255" g="170" b="100"/>
+        <viz:size value="20"/>
+        <viz:position x="0" y="0"/>
+      </node>
+      <node id="B" label="Grassy Meadow">
+        <attvalues>
+          <attvalue for="contentRef" value="items/meadow.json"/>
+          <attvalue for="initiallyVisible" value="false"/>
+          <attvalue for="rawSize" value="20"/>
+        </attvalues>
+        <viz:color r="150" g="200" b="255"/>
+        <viz:size value="20"/>
+        <viz:position x="0" y="100"/>
+      </node>
+      <node id="C" label="The Question">
+        <attvalues>
+          <attvalue for="contentRef" value="items/the-question.json"/>
+          <attvalue for="initiallyVisible" value="false"/>
+          <attvalue for="rawSize" value="20"/>
+        </attvalues>
+        <viz:color r="200" g="150" b="255"/>
+        <viz:size value="20"/>
+        <viz:position x="0" y="200"/>
+      </node>
+    </nodes>
+    <edges>
+      <edge id="e0" source="A" target="B" weight="6">
+        <attvalues>
+          <attvalue for="rawWeight" value="6"/>
+        </attvalues>
+        <viz:color r="204" g="204" b="204"/>
+      </edge>
+      <edge id="e1" source="B" target="C" weight="6">
+        <attvalues>
+          <attvalue for="rawWeight" value="6"/>
+        </attvalues>
+        <viz:color r="204" g="204" b="204"/>
+      </edge>
+    </edges>
+  </graph>
+</gexf>
