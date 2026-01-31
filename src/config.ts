@@ -54,8 +54,14 @@ export const GRAPH = {
   /** Default node size if not specified in GEXF */
   defaultNodeSize: 20,
   
-  /** Default edge thickness */
+  /** Default edge thickness when no weight specified in GEXF */
   defaultEdgeSize: 2,
+  
+  /** 
+   * Edge weight scaling - multiplied by the GEXF weight value
+   * Example: weight=2 in GEXF with scale=0.5 = visual size of 1px
+   */
+  edgeWeightScale: 0.75,
   
   /** Label font family */
   labelFont: "Crimson Text, Georgia, serif",

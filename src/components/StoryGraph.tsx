@@ -44,6 +44,11 @@ interface StoryGraphInnerProps {
   onFirstLoadComplete: () => void;
   animatingNodes: Set<string>;
   animationProgress: number;
+  showAllNodes: boolean;
+}
+
+interface StoryGraphProps {
+  showAllNodes?: boolean;
 }
 
 // Inner component that handles the graph logic
@@ -55,6 +60,7 @@ const StoryGraphInner: React.FC<StoryGraphInnerProps> = ({
   onFirstLoadComplete,
   animatingNodes,
   animationProgress,
+  showAllNodes,
 }) => {
   const loadGraph = useLoadGraph();
   const sigma = useSigma();
@@ -71,42 +77,53 @@ const StoryGraphInner: React.FC<StoryGraphInnerProps> = ({
     sigma.setSetting("labelColor", { attribute: "labelColor" });
   }, [sigma]);
 
-  // Load and filter the graph based on discovered nodes
+  // Load and filter the graph based on discovered nodes (or show all in dev mode)
   useEffect(() => {
     const fullGraph = parse(Graph, gexfData);
     const visibleGraph = new Graph();
 
-    // Add only discovered nodes
+    // Add nodes (all if showAllNodes, otherwise only discovered)
     fullGraph.forEachNode((nodeId, attributes) => {
-      if (discoveredNodes.has(nodeId)) {
+      const isVisible = showAllNodes || discoveredNodes.has(nodeId);
+      if (isVisible) {
         const isAnimating = animatingNodes.has(nodeId);
         const sizeMultiplier = isAnimating ? nodeProgress : 1;
         // Fade label during phase 2 using RGBA
         const labelAlpha = isAnimating ? labelProgress : 1;
+        // In showAll mode, dim undiscovered nodes
+        const isUndiscovered = showAllNodes && !discoveredNodes.has(nodeId);
         
         visibleGraph.addNode(nodeId, {
           ...attributes,
           x: attributes.x ?? 0,
           y: attributes.y ?? 0,
           size: (attributes.size ?? GRAPH.defaultNodeSize) * sizeMultiplier,
-          color: attributes.color ?? COLORS.defaultNodeColor,
+          color: isUndiscovered ? "#555566" : (attributes.color ?? COLORS.defaultNodeColor),
           label: attributes.label ?? nodeId,
-          labelColor: `rgba(232, 228, 223, ${labelAlpha})`,
+          labelColor: isUndiscovered ? "rgba(100, 100, 110, 1)" : `rgba(232, 228, 223, ${labelAlpha})`,
           forceLabel: isAnimating && labelProgress > 0.1 ? true : undefined,
         });
       }
     });
 
-    // Add edges between discovered nodes
+    // Add edges (all if showAllNodes, otherwise only between discovered)
     fullGraph.forEachEdge((edgeId, attributes, source, target) => {
-      if (discoveredNodes.has(source) && discoveredNodes.has(target)) {
+      const sourceVisible = showAllNodes || discoveredNodes.has(source);
+      const targetVisible = showAllNodes || discoveredNodes.has(target);
+      if (sourceVisible && targetVisible) {
         const isAnimating = animatingNodes.has(source) || animatingNodes.has(target);
         const sizeMultiplier = isAnimating ? nodeProgress : 1;
+        // Dim edges to/from undiscovered nodes
+        const isUndiscovered = showAllNodes && (!discoveredNodes.has(source) || !discoveredNodes.has(target));
+        
+        // Use weight from GEXF if available, otherwise default
+        const edgeWeight = attributes.weight ?? GRAPH.defaultEdgeSize;
+        const edgeSize = edgeWeight * GRAPH.edgeWeightScale;
         
         visibleGraph.addEdge(source, target, {
           ...attributes,
-          color: COLORS.defaultEdgeColor,
-          size: GRAPH.defaultEdgeSize * sizeMultiplier,
+          color: isUndiscovered ? "#333340" : COLORS.defaultEdgeColor,
+          size: edgeSize * sizeMultiplier,
         });
       }
     });
@@ -124,7 +141,7 @@ const StoryGraphInner: React.FC<StoryGraphInnerProps> = ({
       });
       onFirstLoadComplete();
     }
-  }, [gexfData, discoveredNodes, loadGraph, sigma, isFirstLoad, onFirstLoadComplete, animatingNodes, nodeProgress, labelProgress]);
+  }, [gexfData, discoveredNodes, loadGraph, sigma, isFirstLoad, onFirstLoadComplete, animatingNodes, nodeProgress, labelProgress, showAllNodes]);
 
   // Handle click events
   useEffect(() => {
@@ -154,7 +171,7 @@ const StoryGraphInner: React.FC<StoryGraphInnerProps> = ({
 };
 
 // Main exported component
-export const StoryGraph: React.FC = () => {
+export const StoryGraph: React.FC<StoryGraphProps> = ({ showAllNodes = false }) => {
   const [gexfData, setGexfData] = useState<string | null>(null);
   const [discoveredNodes, setDiscoveredNodes] = useState<Set<string>>(new Set());
   const [popup, setPopup] = useState<PopupState | null>(null);
@@ -412,6 +429,7 @@ export const StoryGraph: React.FC = () => {
               onFirstLoadComplete={handleFirstLoadComplete}
               animatingNodes={animatingNodes}
               animationProgress={animationProgress}
+              showAllNodes={showAllNodes}
             />
           </SigmaContainer>
         )}

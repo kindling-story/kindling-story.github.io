@@ -25,33 +25,33 @@
         <attvalues>
           <attvalue for="contentRef" value="items/meadow.json"/>
           <attvalue for="initiallyVisible" value="false"/>
-          <attvalue for="rawSize" value="20"/>
+          <attvalue for="rawSize" value="25"/>
         </attvalues>
         <viz:color r="150" g="200" b="255"/>
-        <viz:size value="20"/>
+        <viz:size value="25"/>
         <viz:position x="0" y="100"/>
       </node>
-      <node id="C" label="The Question">
+      <node id="C" label="Cairn">
         <attvalues>
-          <attvalue for="contentRef" value="items/the-question.json"/>
+          <attvalue for="contentRef" value="items/first-cairn.json"/>
           <attvalue for="initiallyVisible" value="false"/>
-          <attvalue for="rawSize" value="20"/>
+          <attvalue for="rawSize" value="30"/>
         </attvalues>
         <viz:color r="200" g="150" b="255"/>
-        <viz:size value="20"/>
+        <viz:size value="30"/>
         <viz:position x="0" y="200"/>
       </node>
     </nodes>
     <edges>
-      <edge id="e0" source="A" target="B" weight="6">
+      <edge id="e0" source="A" target="B" weight="4">
         <attvalues>
-          <attvalue for="rawWeight" value="6"/>
+          <attvalue for="rawWeight" value="4"/>
         </attvalues>
         <viz:color r="204" g="204" b="204"/>
       </edge>
-      <edge id="e1" source="B" target="C" weight="6">
+      <edge id="e1" source="B" target="C" weight="4">
         <attvalues>
-          <attvalue for="rawWeight" value="6"/>
+          <attvalue for="rawWeight" value="4"/>
         </attvalues>
         <viz:color r="204" g="204" b="204"/>
       </edge>
